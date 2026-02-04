@@ -38,3 +38,6 @@ The requested file will be downloaded to the client’s working directory.
 - TCP sockets
 - Client–server architecture
 
+More details about the program:
+[2026W CS456 Assignment 1.pdf](https://github.com/user-attachments/files/25076242/2026W.CS456.Assignment.1.pdf)
+
