@@ -10,4 +10,4 @@
 #    $3: <mode>
 #    $4: <filename>
 
-python client.py $1 $2 "$3" "$4"
+python3 client.py $1 $2 "$3" "$4"

@@ -7,4 +7,4 @@
 #Parameter:
 #    $1: <storage_directory>
 
-python server.py "$1"
+python3 server.py "$1"

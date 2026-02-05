@@ -1,0 +1,15 @@
+In this program, the client will download a file from the server over the network using sockets.
+This program uses a two-stage communication process. In the negotiation stage, the client
+and the server negotiate through a fixed negotiation port (<n_port>) of the server, a random
+port (<r_port>) for later use. Later in the transaction stage, the client and the server connect
+through the selected random port (<r_port>) for actual file transfer.
+Requests and responses in this program will mimic the negotiation and transaction stage
+procedures of File Transfer Protocol (FTP). This protocol will have a GET command for
+downloading files. In FTP a GET request can be executed in active mode, the “default” mode, or
+passive mode (PASV).
+In the negotiation phase, the client issues a GET command to the server indicating a file name
+(<filename>) and either a client-side port number (<r_port>) or the code PASV. This will
+determine whether, in the transaction stage, the server should connect to the client on
+<r_port> and push the file to the client or the client should connect to the server on the port
+number <r_port> returned by the server in response to a passive GET request to receive the
+file.
