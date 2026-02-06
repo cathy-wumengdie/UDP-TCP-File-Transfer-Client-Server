@@ -1,7 +1,7 @@
 # UDP-TCP-File-Transfer-Client-Server
 A lightweight file transfer system implemented in Python using low-level socket programming. The application follows a simplified FTP-style protocol where a client requests files from a server using UDP for negotiation and TCP for reliable data transfer.
 
-The system supports passive connection mode, enabling dynamic negotiation of data ports before transferring file contents between client and server.
+The system supports passive and active connection mode, enabling dynamic negotiation of data ports before transferring file contents between client and server.
 
 ## Features
 - UDP-based negotiation protocol
@@ -40,10 +40,12 @@ The requested file will be downloaded to the client’s working directory.
 - `storage/` – Directory containing files served to clients
 
 ## Testing Instructions
-The program was built and tested on the University of Waterloo undergraduate environment using Python 3.
-Example machines used:
-- ubuntu2404-002.student.cs.uwaterloo.ca
-- ubuntu2404-004.student.cs.uwaterloo.ca
+The program was built and tested on the University of Waterloo undergraduate environment.
+Tested with:
+- Python 3.x
+- Example machines used:
+    - ubuntu2404-002.student.cs.uwaterloo.ca
+    - ubuntu2404-004.student.cs.uwaterloo.ca
 
 Two shell scripts are provided to start the server and client.
 Make scripts executable if needed:
