@@ -22,10 +22,10 @@ Start the server
 ```./server.sh <storage_directory>```
 
 The server prints the negotiation port:
-```SERVER_PORT=<port>```
+```SERVER_PORT=<n_port>```
 
 Run the client
-```./client.sh <server_address> <n_port> PASV <filename>```
+```./client.sh <server_address> <n_port> [PASV|ACTV] <filename>```
 
 Example:
 ```./client.sh 127.0.0.1 51234 PASV hello.txt```
@@ -39,9 +39,60 @@ The requested file will be downloaded to the client’s working directory.
 - `client.sh` – Script to start the client
 - `storage/` – Directory containing files served to clients
 
+## Testing Instructions
+The program was built and tested on the University of Waterloo undergraduate environment.
+Example machines used:
+- ubuntu2404-002.student.cs.uwaterloo.ca
+- ubuntu2404-004.student.cs.uwaterloo.ca
+
+Two shell scripts are provided to start the server and client.
+Make scripts executable if needed:
+```chmod +x server.sh client.sh```
+
+### Single Machine Testing
+1. Start server: `./server.sh ./storage`   -> Server prints `SERVER_PORT=<n_port>`
+2. Test Passive (PASV) mode:
+    Run the client `./client.sh <server_address> <n_port> PASV <filename>`. Since the server and the client are running in the same system, 127.0.0.1 or localhost can be used as the server address.
+    
+    Expected behavior: 
+    - If the file exists in the directory:
+        a. Server prints a TCP port `R_PORT=<r_port>` for transfer 
+        b. File is downloaded in client directory. Client exits quietly -> You can use `diff hello.txt storage/hello.txt` to verify the file content
+    - If the file doesn't exist in the directory: client exits, server stays alive, no files are downloaded.
+
+3. Test Active (ACTV) mode:
+    Run the client `./client.sh <server_address> <n_port> ACTV <filename>`. Since the server and the client are running in the same system, 127.0.0.1 or localhost can be used as the server address.
+
+    Expected behavior: 
+    - If the file exists in the directory:
+        a. Client prints a TCP listening port `R_PORT=<r_port>` for server to connect 
+        b. File is downloaded in client directory. Client exits quietly -> You can use `diff hello.txt storage/hello.txt` to verify the file content
+    - If the file doesn't exist in the directory: Client prints its listening port `R_PORT=<r_port>`, then exits after receiving 404 from the server. The server stays alive, no files are downloaded.
+
+### Two Different Machine Testing
+Run server and client on different machines. Suppose we use machine `ubuntu2404-002.student.cs.uwaterloo.ca` for server and `ubuntu2404-004.student.cs.uwaterloo.ca` for client
+1. SSH into `ubuntu2404-002.student.cs.uwaterloo.ca` and run the server `./server.sh ./storage`   -> Server prints `SERVER_PORT=<n_port>`
+2. SSH into the different host `ubuntu2404-004.student.cs.uwaterloo.ca` for client
+3. Test Passive (PASV) mode:
+    Run the client `./client.sh <server_address> <n_port> PASV <filename>`. In this case, server_address is `ubuntu2404-002.student.cs.uwaterloo.ca`
+
+    Expected behavior: 
+    - If the file exists in the directory:
+        a. Server prints a TCP port `R_PORT=<r_port>` for transfer
+        b. File is downloaded in client directory. Client exits quietly -> You can use `diff hello.txt storage/hello.txt` to verify the file content
+    - If the file doesn't exist in the directory: client exits, server stays alive, no files are downloaded.
+
+4. Test Active (ACTV) mode:
+    Run the client `./client.sh <server_address> <n_port> ACTV <filename>`. In this case, server_address is `ubuntu2404-002.student.cs.uwaterloo.ca`
+
+    Expected behavior: 
+    - If the file exists in the directory:
+        a. Client prints a TCP listening port `R_PORT=<r_port>` for server to connect 
+        b. File is downloaded in client directory. Client exits quietly -> You can use `diff hello.txt storage/hello.txt` to verify the file content
+    - If the file doesn't exist in the directory: Client prints its listening port `R_PORT=<r_port>`, then exits after receiving 404 from the server. The server stays alive, no files are downloaded.
 
 ## Technologies Used
-- Python
+- Python 3
 - UDP sockets
 - TCP sockets
 - Client–server architecture
