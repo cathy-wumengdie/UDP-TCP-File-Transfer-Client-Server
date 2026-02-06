@@ -40,7 +40,7 @@ The requested file will be downloaded to the client’s working directory.
 - `storage/` – Directory containing files served to clients
 
 ## Testing Instructions
-The program was built and tested on the University of Waterloo undergraduate environment.
+The program was built and tested on the University of Waterloo undergraduate environment using Python 3.
 Example machines used:
 - ubuntu2404-002.student.cs.uwaterloo.ca
 - ubuntu2404-004.student.cs.uwaterloo.ca
@@ -48,6 +48,7 @@ Example machines used:
 Two shell scripts are provided to start the server and client.
 Make scripts executable if needed:
 ```chmod +x server.sh client.sh```
+Ensure Python 3 is installed before running the scripts: `python3 --version`
 
 ### Single Machine Testing
 1. Start server: `./server.sh ./storage`   -> Server prints `SERVER_PORT=<n_port>`
